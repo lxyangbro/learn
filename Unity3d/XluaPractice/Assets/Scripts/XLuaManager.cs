@@ -15,7 +15,6 @@ public class XLuaManager : SingletonPatternMonoAutoBase_DontDestroyOnLoad<XLuaMa
         base.Awake();
         luaEnv = new LuaEnv();
         luaEnv.AddLoader(CustomLoader);
-        luaEnv.DoString("CS.UnityEngine.Debug.Log('hello world')");
     }
     
     public void SafeDoString(string scriptContent)
@@ -104,6 +103,14 @@ public class XLuaManager : SingletonPatternMonoAutoBase_DontDestroyOnLoad<XLuaMa
     {
         SafeDoString(string.Format("require('{0}')", scriptName));
     }
+
+void Update()
+        {
+            if (luaenv != null)
+            {
+                luaenv.Tick();
+            }
+        }
 
     protected override void OnDestroy()
     {
